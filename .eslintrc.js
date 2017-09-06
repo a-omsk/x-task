@@ -17,7 +17,8 @@ module.exports = {
         "prefer-template": 0,
         "class-methods-use-this": 0,
         "react/jsx-uses-react": 2,
-        "react/jsx-uses-vars": 2
+        "react/jsx-uses-vars": 2,
+        "arrow-parens": 0,
     },
     "settings": {
         "react": {
