@@ -20,6 +20,9 @@ module.exports = {
         "react/jsx-uses-react": 2,
         "react/jsx-uses-vars": 2,
         "arrow-parens": 0,
+        "prefer-promise-reject-errors": 0,
+        "import/no-extraneous-dependencies": 0,
+        "no-prototype-builtins": 0
     },
     "settings": {
         "react": {
