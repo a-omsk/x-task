@@ -5,7 +5,8 @@ module.exports = {
     },
     "parser": "babel-eslint",   
     "plugins": [
-        "react"
+        "react",
+        "flowtype"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -25,5 +26,8 @@ module.exports = {
           "createClass": "createTask",
           "pragma": "Xpressive",
         },
+        "flowtype": {
+            "onlyFilesWithFlowAnnotation": false
+        }
       }
 }
