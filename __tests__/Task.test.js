@@ -1,56 +1,49 @@
 const Xpressive = require('../src');
 const { Task } = require('../src');
-const Take = require('../src/components/Take');
 
-describe('Take', () => {
-    let GetUser;
+describe('Task', () => {
+    let GetHello;
+    let GetWorld;
+    let GetSmth;
 
     beforeEach(() => {
-        GetUser = class GetUserTask extends Task {
+        GetHello = class GetHelloTask extends Task {
             do() {
-                return Promise.resolve({
-                    id: 123,
-                    firstName: 'joe',
-                    lastName: 'hill',
-                    address: 'some address',
-                });
+                return Promise.resolve({ hello: 'hello' });
+            }
+        };
+
+        GetWorld = class GetWorldTask extends Task {
+            do() {
+                return Promise.resolve(this.params.hello + ' world');
+            }
+        };
+
+        GetSmth = class GetSmthTask extends Task {
+            do() {
+                return Promise.resolve(this.params.hello + ' smth');
             }
         };
     });
 
-    it('should correctly take necessary result keys', () => {
+    it('should correctly process a single children', () => {
         const task = (
-            <GetUser>
-                <Take id firstName />
-            </GetUser>
+            <GetHello>
+                <GetWorld />
+            </GetHello>
         );
 
-        expect(task.start()).resolves.toEqual({
-            id: 123,
-            firstName: 'joe',
-        });
+        expect(task.start()).resolves.toEqual('hello world');
     });
 
-    it('should correctly take and rename necessary result keys ', () => {
+    it('should correctly process a multiple children', () => {
         const task = (
-            <GetUser>
-                <Take id="userId" firstName="userName" />
-            </GetUser>
+            <GetHello>
+                <GetWorld />
+                <GetSmth />
+            </GetHello>
         );
 
-        expect(task.start()).resolves.toEqual({
-            userId: 123,
-            userName: 'joe',
-        });
-    });
-
-    it('should filter non-string param keys', () => {
-        const task = (
-            <GetUser>
-                <Take id={21212} firstName={[]} address={false} />
-            </GetUser>
-        );
-
-        expect(task.start()).resolves.toEqual({});
+        expect(task.start()).resolves.toEqual(['hello world', 'hello smth']);
     });
 });
