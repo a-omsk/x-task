@@ -19,9 +19,9 @@ describe('Take', () => {
 
     it('should correctly take necessary result keys', () => {
         const task = (
-            <GetUser>
-                <Take id firstName />
-            </GetUser>
+            <Take id firstName>
+                <GetUser />
+            </Take>
         );
 
         expect(task.start()).resolves.toEqual({
@@ -32,9 +32,9 @@ describe('Take', () => {
 
     it('should correctly take and rename necessary result keys ', () => {
         const task = (
-            <GetUser>
-                <Take id="userId" firstName="userName" />
-            </GetUser>
+            <Take id="userId" firstName="userName">
+                <GetUser />
+            </Take>
         );
 
         expect(task.start()).resolves.toEqual({
@@ -45,9 +45,9 @@ describe('Take', () => {
 
     it('should filter non-string param keys', () => {
         const task = (
-            <GetUser>
-                <Take id={21212} firstName={[]} address={false} />
-            </GetUser>
+            <Take id={21212} firstName={[]} address={false}>
+                <GetUser />
+            </Take>
         );
 
         expect(task.start()).resolves.toEqual({});

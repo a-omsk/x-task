@@ -18,18 +18,10 @@ class Task {
         return Promise.resolve(this.params);
     }
 
-    processDoResults(result:any):Promise<any> {
-        if (!this.children.length) {
-            return result;
-        }
+    processResults(result:any):Promise<any> {
+        this.setParams(result);
 
-        this.children.forEach(child => child.setParams(result));
-
-        if (this.children.length === 1) {
-            return this.children[0].start();
-        }
-
-        return Promise.all(this.children.map(child => child.start()));
+        return this.do();
     }
 
     setParams(result:Object = {}):void {
@@ -37,13 +29,21 @@ class Task {
     }
 
     start():Promise<any> {
-        const deferred = this.do();
+        if (!this.children.length) {
+            const job = this.do();
 
-        if (deferred instanceof Promise === false) {
-            return this.processDoResults(deferred);
+            if (job instanceof Task) {
+                return job.start();
+            }
+
+            if (job instanceof Promise) {
+                return job;
+            }
+
+            return Promise.resolve(job);
         }
 
-        return deferred.then(result => this.processDoResults(result));
+        return this.children[0].start().then(result => this.processResults(result));
     }
 }
 
