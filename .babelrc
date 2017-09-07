@@ -1,8 +1,45 @@
 {
-    "plugins": [
-        "transform-flow-strip-types",
-        ["transform-react-jsx", {
-            "pragma": "Xpressive.createTask"
-        }]
-    ]
+    "env": {
+        "test": {
+            "plugins": [
+                "transform-flow-strip-types",
+                "transform-es2015-modules-commonjs",
+                [
+                    "transform-react-jsx",
+                    {
+                        "pragma": "Xpressive.createTask"
+                    }
+                ]
+            ]
+        },
+        "development": {
+            "plugins": [
+                "external-helpers",
+                "transform-flow-strip-types",
+                [
+                    "transform-react-jsx",
+                    {
+                        "pragma": "Xpressive.createTask"
+                    }
+                ]
+            ]
+        },
+        "production": {
+            "presets": [
+                ["es2015", {
+                    "modules": false
+                }]
+            ],
+            "plugins": [
+                "external-helpers",
+                "transform-flow-strip-types",
+                [
+                    "transform-react-jsx",
+                    {
+                        "pragma": "Xpressive.createTask"
+                    }
+                ]
+            ]
+        }
+    }
 }

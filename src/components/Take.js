@@ -1,7 +1,7 @@
 // @flow
 
-const partition = require('lodash/partition');
-const Task = require('../Task');
+import partition from 'lodash/partition';
+import Task from '../Task';
 
 class Take extends Task {
     setParams(result:Object = {}):void {
@@ -26,4 +26,4 @@ class Take extends Task {
     }
 }
 
-module.exports = Take;
+export default Take;

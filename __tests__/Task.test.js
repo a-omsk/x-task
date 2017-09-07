@@ -1,5 +1,4 @@
-const Xpressive = require('../src');
-const { Task } = require('../src');
+import Xpressive, { Task } from '../src';
 
 describe('Task', () => {
     let GetHello;
