@@ -73,7 +73,7 @@ describe('Task', () => {
         expect(task.start()).resolves.toEqual('hello world');
     });
 
-    it.skip('should correctly process a multiple children', () => {
+    it('should throw error if multiple children not wrapped by <Merge />', () => {
         const task = (
             <GetHello>
                 <GetWorld />
@@ -81,8 +81,26 @@ describe('Task', () => {
             </GetHello>
         );
 
-        expect(task.start()).resolves.toEqual(['hello world', 'hello smth']);
+        expect(task.start()).rejects.toEqual('Cannot process multiple children directly. Use Merge Task');
     });
 
-    it.skip('should respect higher-order tasks', () => {});
+    it('should respect higher-order tasks', () => {
+        function withGetWorld(WrappedTask) {
+            return class WithGetWorld extends Task {
+                do() {
+                    return (
+                        <GetWorld>
+                            <WrappedTask />
+                        </GetWorld>
+                    );
+                }
+            };
+        }
+
+        const WrappedGetHello = withGetWorld(GetHello);
+
+        const task = <WrappedGetHello />;
+
+        expect(task.start()).resolves.toEqual('hello world');
+    });
 });

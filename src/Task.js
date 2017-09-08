@@ -53,10 +53,14 @@ class Task {
     }
 
     start():Promise<any> {
-        if (!this.children.length) {
+        if (this.children.length === 0) {
             const job = this.do();
 
             return this.processDoResults(job);
+        }
+
+        if (this.children.length > 1) {
+            return Promise.reject('Cannot process multiple children directly. Use Merge Task');
         }
 
         return this.resolveChild(this.children[0])
