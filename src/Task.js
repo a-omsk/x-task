@@ -2,7 +2,7 @@
 
 class Task {
     params:Object;
-    children: Array<Task>;
+    children: Array<Task | Function>;
 
     constructor(params:Object, children:Array<Task>) {
         // $FlowIssue: https://github.com/facebook/flow/issues/1152
@@ -18,7 +18,7 @@ class Task {
         return Promise.resolve(this.params);
     }
 
-    processResults(result:any):Promise<any> {
+    onResolve(result:any):Promise<any> {
         this.setParams(result);
 
         return this.do();
@@ -28,22 +28,40 @@ class Task {
         Object.assign(this.params, result);
     }
 
+    processDoResults(job:any):Promise<any> {
+        if (job instanceof Task) {
+            return job.start();
+        }
+
+        if (job instanceof Promise) {
+            return job;
+        }
+
+        return Promise.resolve(job);
+    }
+
+    resolveChild(task: Task | Function):Task {
+        if (task instanceof Task) {
+            return task;
+        }
+
+        if (task instanceof Function) {
+            return this.resolveChild(task());
+        }
+
+        throw new Error('invalid child'); // TODO: extend error text
+    }
+
     start():Promise<any> {
         if (!this.children.length) {
             const job = this.do();
 
-            if (job instanceof Task) {
-                return job.start();
-            }
-
-            if (job instanceof Promise) {
-                return job;
-            }
-
-            return Promise.resolve(job);
+            return this.processDoResults(job);
         }
 
-        return this.children[0].start().then(result => this.processResults(result));
+        return this.resolveChild(this.children[0])
+            .start()
+            .then(result => this.onResolve(result));
     }
 }
 
