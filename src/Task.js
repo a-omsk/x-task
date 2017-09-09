@@ -54,9 +54,13 @@ class Task {
 
     start():Promise<any> {
         if (this.children.length === 0) {
-            const job = this.do();
+            try {
+                const job = this.do();
 
-            return this.processDoResults(job);
+                return this.processDoResults(job);
+            } catch (e) {
+                return Promise.reject(e);
+            }
         }
 
         if (this.children.length > 1) {

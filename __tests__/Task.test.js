@@ -73,6 +73,36 @@ describe('Task', () => {
         expect(task.start()).resolves.toEqual('hello world');
     });
 
+    it('should correctly process an error tasks', () => {
+        class ErrorTask extends Task {
+            do() {
+                return Promise.reject('error');
+            }
+        }
+
+        const task = (
+            <GetHello>
+                <ErrorTask />
+            </GetHello>
+        );
+
+        expect(task.start()).rejects.toEqual('error');
+
+        class AnotherErrorTask extends Task {
+            do() {
+                throw new Error('error');
+            }
+        }
+
+        const anotherTask = (
+            <GetHello>
+                <AnotherErrorTask />
+            </GetHello>
+        );
+
+        expect(anotherTask.start()).rejects.toBeInstanceOf(Error);
+    });
+
     it('should throw error if multiple children not wrapped by <Merge />', () => {
         const task = (
             <GetHello>
