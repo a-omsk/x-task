@@ -1,9 +1,9 @@
 // @flow
 
-import Take from './Take';
+import Pick from './Pick';
 import Repeat from './Repeat';
 
 export default {
-    Take,
+    Pick,
     Repeat,
 };

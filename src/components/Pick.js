@@ -3,7 +3,7 @@
 import partition from 'lodash/partition';
 import Task from '../Task';
 
-class Take extends Task {
+class Pick extends Task {
     setParams(result:Object = {}):void {
         const paramKeys = Object
             .keys(this.params)
@@ -26,4 +26,4 @@ class Take extends Task {
     }
 }
 
-export default Take;
+export default Pick;

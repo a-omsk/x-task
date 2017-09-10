@@ -1,7 +1,7 @@
 import Xpressive, { Task } from '../../src';
-import Take from '../../src/components/Take';
+import Pick from '../../src/components/Pick';
 
-describe('Take', () => {
+describe('Pick', () => {
     let GetUser;
 
     beforeEach(() => {
@@ -17,11 +17,11 @@ describe('Take', () => {
         };
     });
 
-    it('should correctly take necessary result keys', () => {
+    it('should correctly pick necessary result keys', () => {
         const task = (
-            <Take id firstName>
+            <Pick id firstName>
                 <GetUser />
-            </Take>
+            </Pick>
         );
 
         expect(task.start()).resolves.toEqual({
@@ -30,11 +30,11 @@ describe('Take', () => {
         });
     });
 
-    it('should correctly take and rename necessary result keys ', () => {
+    it('should correctly pick and rename necessary result keys ', () => {
         const task = (
-            <Take id="userId" firstName="userName">
+            <Pick id="userId" firstName="userName">
                 <GetUser />
-            </Take>
+            </Pick>
         );
 
         expect(task.start()).resolves.toEqual({
@@ -45,9 +45,9 @@ describe('Take', () => {
 
     it('should filter non-string param keys', () => {
         const task = (
-            <Take id={21212} firstName={[]} address={false}>
+            <Pick id={21212} firstName={[]} address={false}>
                 <GetUser />
-            </Take>
+            </Pick>
         );
 
         expect(task.start()).resolves.toEqual({});
