@@ -37,6 +37,9 @@ describe('Repeat', () => {
         task.start().then(r => {
             expect(r).toEqual(result);
             expect(spy).toHaveBeenCalledTimes(2);
+
+            spy.mockReset();
+            spy.mockRestore();
         });
     });
 
@@ -57,6 +60,11 @@ describe('Repeat', () => {
             </Repeat>
         );
 
-        task.start().catch(() => expect(spy).toHaveBeenCalledTimes(4));
+        task.start().catch(() => {
+            expect(spy).toHaveBeenCalledTimes(4);
+
+            spy.mockReset();
+            spy.mockRestore();
+        });
     });
 });
