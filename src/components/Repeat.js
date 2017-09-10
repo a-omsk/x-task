@@ -26,4 +26,4 @@ class Repeat extends Task {
     }
 }
 
-module.exports = Repeat;
+export default Repeat;
