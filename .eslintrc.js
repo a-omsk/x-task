@@ -22,7 +22,8 @@ module.exports = {
         "arrow-parens": 0,
         "prefer-promise-reject-errors": 0,
         "import/no-extraneous-dependencies": 0,
-        "no-prototype-builtins": 0
+        "no-prototype-builtins": 0,
+        "arrow-body-style": 0,
     },
     "settings": {
         "react": {

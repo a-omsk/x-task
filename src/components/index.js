@@ -5,6 +5,7 @@ import Repeat from './Repeat';
 import Merge from './Merge';
 import Constant from './Constant';
 import Either from './Either';
+import Pipe from './Pipe';
 
 export default {
     Pick,
@@ -12,4 +13,5 @@ export default {
     Merge,
     Constant,
     Either,
+    Pipe,
 };
