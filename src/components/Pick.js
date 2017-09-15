@@ -1,7 +1,18 @@
 // @flow
 
-import partition from 'lodash/partition';
 import Task from '../Task';
+
+const partition = (array:Array<string>, predicate: (key:string) => boolean) => {
+    return array.reduce((result:[Array<string>, Array<string>], key:string) => {
+        if (predicate(key)) {
+            result[0].push(key);
+        } else {
+            result[1].push(key);
+        }
+
+        return result;
+    }, [[], []]);
+};
 
 class Pick extends Task {
     setParams(result:Object = {}):void {
