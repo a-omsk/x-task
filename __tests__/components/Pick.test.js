@@ -4,7 +4,7 @@ import Pick from '../../src/components/Pick';
 describe('Pick', () => {
     let GetUser;
 
-    beforeEach(() => {
+    beforeAll(() => {
         GetUser = class GetUserTask extends Task {
             do() {
                 return Promise.resolve({

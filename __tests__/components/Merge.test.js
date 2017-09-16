@@ -6,7 +6,7 @@ describe('Merge', () => {
     let GetThis;
     let GetWorld;
 
-    beforeEach(() => {
+    beforeAll(() => {
         GetHello = class GetHelloTask extends Task {
             do() {
                 return Promise.resolve({ result: 'hello' });

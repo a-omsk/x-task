@@ -5,7 +5,7 @@ describe('Either', () => {
     let Left;
     let Right;
 
-    beforeEach(() => {
+    beforeAll(() => {
         Left = class LeftTask extends Task {
             do() {
                 return Promise.resolve({ result: 'left' });

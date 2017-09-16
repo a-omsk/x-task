@@ -4,7 +4,7 @@ import Take from '../../src/components/Take';
 describe('Take', () => {
     let SomeTask;
 
-    beforeEach(() => {
+    beforeAll(() => {
         SomeTask = class SomeTaskClass extends Task {
             do() {
                 return Promise.resolve({

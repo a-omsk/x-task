@@ -24,6 +24,7 @@ module.exports = {
         "import/no-extraneous-dependencies": 0,
         "no-prototype-builtins": 0,
         "arrow-body-style": 0,
+        "import/no-named-as-default": 0,
     },
     "settings": {
         "react": {

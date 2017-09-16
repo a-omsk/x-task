@@ -6,7 +6,7 @@ describe('Pipe', () => {
     let Second;
     let Third;
 
-    beforeEach(() => {
+    beforeAll(() => {
         First = class FirstTask extends Task {
             do() {
                 return Promise.resolve({
