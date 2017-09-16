@@ -41,10 +41,10 @@ describe('Zip', () => {
             }
         };
 
-        zipper = (id, { name }, friend) => ({
+        zipper = (id, { name }, friends) => ({
             id,
             name,
-            friend,
+            friends,
         });
     });
 
@@ -79,7 +79,7 @@ describe('Zip', () => {
     });
 
     it('should throw an error if "as" param has invalid type', () => {
-        const task = <Zip of={['ids', 'users']} />;
+        const task = <Zip of={['ids', 'users']} as={[]} />;
 
         expect(task.start()).rejects.toEqual('"as" param presented in Zip task should be a number or string');
     });
@@ -92,7 +92,7 @@ describe('Zip', () => {
             </Zip>
         );
 
-        expect(task.start()).rejects.toEqual('no "zipper" key presented in results of Zip task');
+        expect(task.start()).rejects.toEqual('no "zipper" key presented in Zip task');
     });
 
     it('should throw an error if "zipper" param has invalid type', () => {

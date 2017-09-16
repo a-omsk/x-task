@@ -25,6 +25,7 @@ module.exports = {
         "no-prototype-builtins": 0,
         "arrow-body-style": 0,
         "import/no-named-as-default": 0,
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
     },
     "settings": {
         "react": {
