@@ -1,4 +1,4 @@
-import Xpressive, { Task } from '../../src';
+import XTask, { Task } from '../../src';
 import Take from '../../src/components/Take';
 
 describe('Take', () => {

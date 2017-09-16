@@ -1,4 +1,4 @@
-import Xpressive, { Task } from '../../src';
+import XTask, { Task } from '../../src';
 import Repeat from '../../src/components/Repeat';
 
 describe('Repeat', () => {

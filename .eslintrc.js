@@ -28,7 +28,7 @@ module.exports = {
     "settings": {
         "react": {
           "createClass": "createTask",
-          "pragma": "Xpressive",
+          "pragma": "XTask",
         },
         "flowtype": {
             "onlyFilesWithFlowAnnotation": false

@@ -1,4 +1,4 @@
-import Xpressive from '../../src';
+import XTask from '../../src';
 import Constant from '../../src/components/Constant';
 
 describe('Merge', () => {

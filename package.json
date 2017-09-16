@@ -1,7 +1,7 @@
 {
-  "name": "x-pressive",
-  "version": "1.0.0",
-  "description": "",
+  "name": "x-task",
+  "version": "0.1.0",
+  "description": "Rethink async tasks with JSX and React-like way",
   "main": "index.js",
   "scripts": {
     "build:dev": "rollup --config rollup.config.dev.js",
@@ -10,8 +10,8 @@
     "test": "jest",
     "flow": "flow"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Artur Shelashskiy <a-omsk@riseup.net>",
+  "license": "GPL-3.0",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^7.2.3",

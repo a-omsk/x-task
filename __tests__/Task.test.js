@@ -1,4 +1,4 @@
-import Xpressive, { Task } from '../src';
+import XTask, { Task } from '../src';
 
 describe('Task', () => {
     let GetHello;
