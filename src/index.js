@@ -1,15 +1,18 @@
 // @flow
 
-import ExportTask from './Task';
-import ExportComponents from './components/index';
+import Task from './Task';
+import Components from './components/index';
 
 class XTask {
-    static createTask(Constructor:Function, params:any, ...children:Array<ExportTask>):ExportTask {
+    static createTask(Constructor:Function, params:any, ...children:Array<Task>):Task {
         return new Constructor(params, children);
     }
 }
 
-export const Task = ExportTask;
-export const Components = ExportComponents;
+export {
+    Task,
+    Components,
+    XTask,
+};
 
 export default XTask;
