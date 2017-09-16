@@ -7,6 +7,7 @@ import Constant from './Constant';
 import Either from './Either';
 import Pipe from './Pipe';
 import Take from './Take';
+import Reject from './Reject';
 
 export default {
     Pick,
@@ -16,4 +17,5 @@ export default {
     Either,
     Pipe,
     Take,
+    Reject,
 };
