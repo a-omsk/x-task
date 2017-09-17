@@ -20,18 +20,24 @@ describe('Either', () => {
     });
 
     it('should throw an error if no condition passed or wrong type of condition', () => {
+        expect.hasAssertions();
+
         const task = <Either />;
 
         expect(task.start()).rejects.toEqual('Missed condition or invalid condition type in Either task');
     });
 
     it('should throw an error if children count is invalid', () => {
+        expect.hasAssertions();
+
         const task = <Either condition={() => true} />;
 
         expect(task.start()).rejects.toEqual('Invalid children count in Either task');
     });
 
     it('should choose the Left (first) children when falsy condition result', () => {
+        expect.hasAssertions();
+
         const task = (
             <Either condition={() => false}>
                 <Left />
@@ -43,6 +49,8 @@ describe('Either', () => {
     });
 
     it('should choose the Right (second) children when truthy condition result', () => {
+        expect.hasAssertions();
+
         const task = (
             <Either condition={() => true}>
                 <Left />

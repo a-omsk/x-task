@@ -58,5 +58,6 @@ typings/
 .env
 
 .vscode/
+.idea/
 
 /index.js

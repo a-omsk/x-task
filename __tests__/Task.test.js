@@ -26,6 +26,8 @@ describe('Task', () => {
     });
 
     it('should correctly process a single children', () => {
+        expect.hasAssertions();
+
         const task = (
             <GetWorld>
                 <GetHello />
@@ -36,6 +38,8 @@ describe('Task', () => {
     });
 
     it('should correctly process a nested children', () => {
+        expect.hasAssertions();
+
         const result = {
             answer: 42,
         };
@@ -64,6 +68,8 @@ describe('Task', () => {
     });
 
     it('should correctly process a function children', () => {
+        expect.hasAssertions();
+
         const task = (
             <GetWorld>
                 {() => <GetHello />}
@@ -74,6 +80,8 @@ describe('Task', () => {
     });
 
     it('should correctly process an error tasks', () => {
+        expect.assertions(2);
+
         class ErrorTask extends Task {
             do() {
                 return Promise.reject('error');
@@ -104,6 +112,8 @@ describe('Task', () => {
     });
 
     it('should throw error if multiple children not wrapped by <Merge />', () => {
+        expect.hasAssertions();
+
         const task = (
             <GetHello>
                 <GetWorld />
@@ -115,6 +125,8 @@ describe('Task', () => {
     });
 
     it('should respect higher-order tasks', () => {
+        expect.hasAssertions();
+
         function withGetWorld(WrappedTask) {
             return class WithGetWorld extends Task {
                 do() {

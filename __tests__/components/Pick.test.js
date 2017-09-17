@@ -18,6 +18,8 @@ describe('Pick', () => {
     });
 
     it('should correctly pick necessary result keys', () => {
+        expect.hasAssertions();
+
         const task = (
             <Pick id firstName>
                 <GetUser />
@@ -31,6 +33,8 @@ describe('Pick', () => {
     });
 
     it('should correctly pick and rename necessary result keys ', () => {
+        expect.hasAssertions();
+
         const task = (
             <Pick id="userId" firstName="userName">
                 <GetUser />
@@ -44,6 +48,8 @@ describe('Pick', () => {
     });
 
     it('should filter non-string param keys', () => {
+        expect.hasAssertions();
+
         const task = (
             <Pick id={21212} firstName={[]} address={false}>
                 <GetUser />

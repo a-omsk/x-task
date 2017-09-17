@@ -16,6 +16,8 @@ describe('Take', () => {
     });
 
     it('should throw an error if passed prop is not array', () => {
+        expect.assertions(2);
+
         const errorMsg = 'Invalid type of "from" passed to Take task. Use string or number';
         const task = <Take />;
 
@@ -27,6 +29,8 @@ describe('Take', () => {
     });
 
     it('should throw an error if no count passed or it has invalid type', () => {
+        expect.assertions(2);
+
         const errorMsg = 'Invalid type of "count" passed to Take task';
         const task = <Take from="someArray" />;
 
@@ -38,12 +42,16 @@ describe('Take', () => {
     });
 
     it('should throw an error if no children contains', () => {
+        expect.hasAssertions();
+
         const task = <Take from="someArray" count={3} />;
 
         expect(task.start()).rejects.toEqual('No children contains in Take task');
     });
 
     it('should throw an error if no key passed to "from" not contains in children result', () => {
+        expect.hasAssertions();
+
         const task = (
             <Take from="invalidKey" count={3}>
                 <SomeTask />
@@ -54,6 +62,8 @@ describe('Take', () => {
     });
 
     it('should throw an error if no key passed to "from" not contains in children result', () => {
+        expect.hasAssertions();
+
         const task = (
             <Take from="someNumber" count={3}>
                 <SomeTask />
@@ -64,6 +74,8 @@ describe('Take', () => {
     });
 
     it('should take n (count) elements from target key (from) of children result', () => {
+        expect.hasAssertions();
+
         const task = (
             <Take from="someArray" count={3}>
                 <SomeTask />
