@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build:dev": "rollup --config rollup.config.dev.js",
-    "build:prod": "rollup --config rollup.config.prod.js",
+    "build:prod": "rollup --config rollup.config.prod.js --environment production",
     "build:watch": "rollup --watch --config rollup.config.dev.js",
     "test": "jest",
     "flow": "flow"
