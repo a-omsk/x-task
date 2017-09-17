@@ -9,6 +9,7 @@ import Pipe from './Pipe';
 import Take from './Take';
 import Reject from './Reject';
 import Zip from './Zip';
+import Get from './Get';
 
 export default {
     Pick,
@@ -20,4 +21,5 @@ export default {
     Take,
     Reject,
     Zip,
+    Get,
 };
