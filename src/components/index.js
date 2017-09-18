@@ -10,6 +10,7 @@ import Take from './Take';
 import Reject from './Reject';
 import Zip from './Zip';
 import Get from './Get';
+import Catch from './Catch';
 
 export default {
     Pick,
@@ -22,4 +23,5 @@ export default {
     Reject,
     Zip,
     Get,
+    Catch,
 };
