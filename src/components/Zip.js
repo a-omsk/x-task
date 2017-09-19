@@ -32,7 +32,7 @@ class Zip extends Task {
         });
     }
 
-    onResolve(result:Object):Promise<any> {
+    onResolve(result:Object):Promise<any> | Task {
         let missedKey;
 
         const hasMissedKeys = this.params.of.some(key => {

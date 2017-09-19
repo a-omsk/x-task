@@ -145,4 +145,25 @@ describe('Task', () => {
 
         expect(task.start()).resolves.toEqual('hello world');
     });
+
+    it('should remove ownParams from result', () => {
+        expect.hasAssertions();
+
+        class WithOwnProps extends Task {
+            static get ownParams() {
+                return ['some', 'params'];
+            }
+        }
+
+        const task = (
+            <WithOwnProps some params within >
+                <GetHello />
+            </WithOwnProps>
+        );
+
+        expect(task.start()).resolves.toEqual({
+            hello: 'hello',
+            within: true,
+        });
+    });
 });

@@ -1,8 +1,14 @@
 // @flow
 
+import omit from 'lodash/omit';
+
 class Task {
     params:Object;
     children: Array<Task | Function>;
+
+    static get ownParams():Array<string> {
+        return [];
+    }
 
     constructor(params:Object, children:Array<Task>) {
         // $FlowIssue: https://github.com/facebook/flow/issues/1152
@@ -14,11 +20,11 @@ class Task {
         this.children = children;
     }
 
-    do():Promise<any> {
-        return Promise.resolve(this.params);
+    do():Promise<any> | Task {
+        return Promise.resolve(omit(this.params, this.constructor.ownParams));
     }
 
-    onResolve(result:any):Promise<any> {
+    onResolve(result:any):Promise<any> | Task {
         this.setParams(result);
 
         return this.do();

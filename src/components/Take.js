@@ -18,7 +18,7 @@ class Take extends Task {
         });
     }
 
-    onResolve(result:any):Promise<any> {
+    onResolve(result:any):Promise<any> | Task {
         if (!result.hasOwnProperty(this.params.from)) {
             return Promise.reject(`No ${this.params.from} key found in result of Take children`);
         }

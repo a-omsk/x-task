@@ -1,6 +1,5 @@
 // @flow
 
-import omit from 'lodash/omit';
 import Task from '../Task';
 
 type CatchParams = {
@@ -10,8 +9,8 @@ type CatchParams = {
 class Catch extends Task {
     params:CatchParams;
 
-    do():Promise<any> {
-        return Promise.resolve(omit(this.params, 'handler'));
+    static get ownParams():Array<string> {
+        return ['handler'];
     }
 
     start():Promise<any> {

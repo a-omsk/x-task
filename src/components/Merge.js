@@ -1,6 +1,5 @@
 // @flow
 
-import omit from 'lodash/omit';
 import Task from '../Task';
 
 type MergeFn = (results:Array<any>) => {[key:string]: any}
@@ -8,14 +7,14 @@ type MergeFn = (results:Array<any>) => {[key:string]: any}
 class Merge extends Task {
     merge:MergeFn;
 
+    static get ownParams():Array<string> {
+        return ['onResolve'];
+    }
+
     constructor(...args:Array<any>) {
         super(...args);
 
         this.merge = this.params.onResolve;
-    }
-
-    do():Promise<any> {
-        return Promise.resolve(omit(this.params, 'onResolve'));
     }
 
     start():Promise<any> {
