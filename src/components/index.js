@@ -11,6 +11,7 @@ import Reject from './Reject';
 import Zip from './Zip';
 import Get from './Get';
 import Catch from './Catch';
+import Context from './Context';
 
 export default {
     Pick,
@@ -24,4 +25,5 @@ export default {
     Zip,
     Get,
     Catch,
+    Context,
 };
