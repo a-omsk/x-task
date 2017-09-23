@@ -2,7 +2,7 @@
 // @jsx XTask.createTask
 
 import XTask from '../index';
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 const _contextKey = Symbol('context');
 
@@ -21,11 +21,11 @@ class Context extends Task {
         super(...args);
 
         if (typeof this.params.of === 'undefined') {
-            throw new Error('no "of" param presented in Context task');
+            throw new TaskError('no "of" param presented in Context task');
         }
 
         if (this.children.length === 0) {
-            throw new Error('Context task not contains any children');
+            throw new TaskError('Context task not contains any children');
         }
 
         this.setContext(this.children);

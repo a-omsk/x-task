@@ -2,6 +2,8 @@
 
 import omit from 'lodash/omit';
 
+class TaskError extends Error {}
+
 class Task {
     params:Object;
     children: Array<Task | Function>;
@@ -80,3 +82,7 @@ class Task {
 }
 
 export default Task;
+
+export {
+    TaskError,
+};
