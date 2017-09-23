@@ -20,46 +20,34 @@ describe('Get', () => {
     it('should throw an error if no path presented', () => {
         expect.hasAssertions();
 
-        const task = <Get />;
-
-        expect(task.start()).rejects.toEqual('Missed path property in Get task');
+        expect(() => <Get />).toThrowError('Missed path property in Get task');
     });
 
     it('should throw an error if path not string or Array', () => {
         expect.hasAssertions();
 
-        const task = <Get path={{ hello: 'world' }} />;
-
-        expect(task.start()).rejects.toEqual('Get\'s task "path" param must be a string or Array');
+        expect(() => <Get path={{ hello: 'world' }} />).toThrowError('Get\'s task "path" param must be a string or Array');
     });
 
     it('should throw an error if "as" param is not a string', () => {
         expect.hasAssertions();
 
-        const task = <Get path={'some.task'} as={[]} />;
-
-        expect(task.start()).rejects.toEqual('Get\'s task "as" param must be a string');
+        expect(() => <Get path={'some.task'} as={[]} />).toThrowError('Get\'s task "as" param must be a string');
     });
 
     it('should throw an error if "path" is empty', () => {
         expect.assertions(2);
         const errorMsg = 'Get\'s task "path" param must not be empty';
 
-        const task = <Get path={[]} />;
+        expect(() => <Get path={[]} />).toThrowError(errorMsg);
 
-        expect(task.start()).rejects.toEqual(errorMsg);
-
-        const anotherTask = <Get path="" />;
-
-        expect(anotherTask.start()).rejects.toEqual(errorMsg);
+        expect(() => <Get path="" />).toThrowError(errorMsg);
     });
 
     it('should throw an error if "as" is empty', () => {
         expect.assertions(1);
 
-        const task = <Get path="some.task" as="" />;
-
-        expect(task.start()).rejects.toEqual('Get\'s task "as" param must not be empty');
+        expect(() => <Get path="some.task" as="" />).toThrowError('Get\'s task "as" param must not be empty');
     });
 
     it('should assign target value with own key', () => {

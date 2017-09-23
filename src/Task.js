@@ -57,7 +57,7 @@ class Task {
             return this.resolveChild(task());
         }
 
-        throw new Error('invalid child'); // TODO: extend error text
+        throw new TaskError('Invalid child presented in Task. Use function or other Task instances');
     }
 
     start():Promise<any> {

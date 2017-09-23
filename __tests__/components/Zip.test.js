@@ -49,61 +49,61 @@ describe('Zip', () => {
     });
 
     it('should throw an error if no "of" param presented', () => {
-        const task = <Zip />;
+        const task = () => <Zip />;
 
-        expect(task.start()).rejects.toEqual('no "of" param presented in Zip task');
+        expect(task).toThrowError('no "of" param presented in Zip task');
     });
 
     it('should throw an error if "of" param is not Array', () => {
-        const task = <Zip of="users" />;
+        const task = () => <Zip of="users" />;
 
-        expect(task.start()).rejects.toEqual('"of" param of Zip task is not Array');
+        expect(task).toThrowError('"of" param of Zip task is not Array');
     });
 
     it('should throw an error if "of" param length less then 2', () => {
-        const task = <Zip of={['users']} />;
+        const task = () => <Zip of={['users']} />;
 
-        expect(task.start()).rejects.toEqual('"of" param of Zip task is has insufficient length');
+        expect(task).toThrowError('"of" param of Zip task is has insufficient length');
     });
 
     it('should throw an error if "of" param\'s elements  has invalid type', () => {
-        const task = <Zip of={[{}, 'users']} />;
+        const task = () => <Zip of={[{}, 'users']} />;
 
-        expect(task.start()).rejects.toEqual('"of" param\' element presented in Zip task should be a number or string');
+        expect(task).toThrowError('"of" param\' element presented in Zip task should be a number or string');
     });
 
     it('should throw an error if no "as" param presented', () => {
-        const task = <Zip of={['ids', 'users']} />;
+        const task = () => <Zip of={['ids', 'users']} />;
 
-        expect(task.start()).rejects.toEqual('no "as" param presented in Zip task');
+        expect(task).toThrowError('no "as" param presented in Zip task');
     });
 
     it('should throw an error if "as" param has invalid type', () => {
-        const task = <Zip of={['ids', 'users']} as={[]} />;
+        const task = () => <Zip of={['ids', 'users']} as={[]} />;
 
-        expect(task.start()).rejects.toEqual('"as" param presented in Zip task should be a number or string');
+        expect(task).toThrowError('"as" param presented in Zip task should be a number or string');
     });
 
     it('should throw an error if no "zipper" param presented', () => {
-        const task = (
+        const task = () => (
             <Zip of={['ids', 'friends']} as="fullfilledUsers">
                 <Ids />
                 <Friends />
             </Zip>
         );
 
-        expect(task.start()).rejects.toEqual('no "zipper" key presented in Zip task');
+        expect(task).toThrowError('no "zipper" key presented in Zip task');
     });
 
     it('should throw an error if "zipper" param has invalid type', () => {
-        const task = (
+        const task = () => (
             <Zip of={['ids', 'friends']} as="fullfilledUsers" zipper="hello">
                 <Ids />
                 <Friends />
             </Zip>
         );
 
-        expect(task.start()).rejects.toEqual('"zipper" param presented in Zip task should be a function');
+        expect(task).toThrowError('"zipper" param presented in Zip task should be a function');
     });
 
     it('should throw an error if no keys found by "of" paths', () => {

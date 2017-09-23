@@ -33,9 +33,9 @@ describe('Pipe', () => {
     });
 
     it('should throw an error if no children contains within', () => {
-        const task = <Pipe />;
+        const task = () => <Pipe />;
 
-        expect(task.start()).rejects.toEqual('No children contains in Pipe task');
+        expect(task).toThrowError('No children contains in Pipe task');
     });
 
     it('should sequentially do the tasks passed as children', () => {

@@ -1,6 +1,6 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 type ZipParams = {
     of: Array<string | number>,
@@ -10,6 +10,45 @@ type ZipParams = {
 
 class Zip extends Task {
     params:ZipParams;
+
+    constructor(...args:Array<any>) {
+        super(...args);
+
+        const { of, as, zipper } = this.params;
+
+        if (typeof of === 'undefined') {
+            throw new TaskError('no "of" param presented in Zip task');
+        }
+
+        if (!Array.isArray(of)) {
+            throw new TaskError('"of" param of Zip task is not Array');
+        }
+
+        if (of.length < 2) {
+            throw new TaskError('"of" param of Zip task is has insufficient length');
+        }
+
+        if (of.some((key) => typeof key !== 'string' && typeof key !== 'number')) {
+            throw new TaskError('"of" param\' element presented in Zip task should be a number or string');
+        }
+
+        if (typeof as === 'undefined') {
+            throw new TaskError('no "as" param presented in Zip task');
+        }
+
+        if (typeof as !== 'string' && typeof as !== 'number') {
+            throw new TaskError('"as" param presented in Zip task should be a number or string');
+        }
+
+        if (typeof zipper === 'undefined') {
+            throw new TaskError('no "zipper" key presented in Zip task');
+        }
+
+        if (typeof zipper !== 'function') {
+            throw new TaskError('"zipper" param presented in Zip task should be a function');
+        }
+
+    }
 
     do():Promise<any> {
         const { of, as, zipper } = this.params;
@@ -69,40 +108,6 @@ class Zip extends Task {
     }
 
     start():Promise<any> {
-        const { of, as, zipper } = this.params;
-
-        if (typeof of === 'undefined') {
-            return Promise.reject('no "of" param presented in Zip task');
-        }
-
-        if (!Array.isArray(of)) {
-            return Promise.reject('"of" param of Zip task is not Array');
-        }
-
-        if (of.length < 2) {
-            return Promise.reject('"of" param of Zip task is has insufficient length');
-        }
-
-        if (of.some((key) => typeof key !== 'string' && typeof key !== 'number')) {
-            return Promise.reject('"of" param\' element presented in Zip task should be a number or string');
-        }
-
-        if (typeof as === 'undefined') {
-            return Promise.reject('no "as" param presented in Zip task');
-        }
-
-        if (typeof as !== 'string' && typeof as !== 'number') {
-            return Promise.reject('"as" param presented in Zip task should be a number or string');
-        }
-
-        if (typeof zipper === 'undefined') {
-            return Promise.reject('no "zipper" key presented in Zip task');
-        }
-
-        if (typeof zipper !== 'function') {
-            return Promise.reject('"zipper" param presented in Zip task should be a function');
-        }
-
         const taskPromises = this.children.map(child => this.resolveChild(child).start());
 
         return Promise.all(taskPromises)

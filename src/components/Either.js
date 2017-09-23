@@ -1,20 +1,36 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
-type ConditionFn = () => boolean;
+type PredicateFn = (...args:Array<any>) => boolean;
+
+type EitherParams = {
+    predicate: PredicateFn
+};
 
 class Either extends Task {
-    condition:ConditionFn;
+    params:EitherParams;
+
+    static get ownParams() {
+        return ['predicate'];
+    }
 
     constructor(...args:Array<any>) {
         super(...args);
 
-        this.condition = this.params.condition;
+        const { predicate } = this.params;
+
+        if (typeof predicate !== 'function') {
+            throw new TaskError('Missed predicate or invalid predicate type in Either task');
+        }
+
+        if (this.children.length !== 2) {
+            throw new TaskError('Invalid children count in Either task');
+        }
     }
 
     do():Promise<any> {
-        const result = this.condition.call(this);
+        const result = this.params.predicate.call(this);
 
         if (result) {
             return this.children[1].start();
@@ -24,14 +40,6 @@ class Either extends Task {
     }
 
     start():Promise<any> {
-        if (typeof this.condition !== 'function') {
-            return Promise.reject('Missed condition or invalid condition type in Either task');
-        }
-
-        if (this.children.length !== 2) {
-            return Promise.reject('Invalid children count in Either task');
-        }
-
         return this.do();
     }
 }

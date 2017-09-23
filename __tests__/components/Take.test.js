@@ -19,34 +19,34 @@ describe('Take', () => {
         expect.assertions(2);
 
         const errorMsg = 'Invalid type of "from" passed to Take task. Use string or number';
-        const task = <Take />;
+        const task = () => <Take />;
 
-        expect(task.start()).rejects.toEqual(errorMsg);
+        expect(task).toThrowError(errorMsg);
 
-        const anotherTask = <Take from={{ hello: 'world' }} />;
+        const anotherTask = () => <Take from={{ hello: 'world' }} />;
 
-        expect(anotherTask.start()).rejects.toEqual(errorMsg);
+        expect(anotherTask).toThrowError(errorMsg);
     });
 
     it('should throw an error if no count passed or it has invalid type', () => {
         expect.assertions(2);
 
         const errorMsg = 'Invalid type of "count" passed to Take task';
-        const task = <Take from="someArray" />;
+        const task = () => <Take from="someArray" />;
 
-        expect(task.start()).rejects.toEqual(errorMsg);
+        expect(task).toThrowError(errorMsg);
 
-        const anotherTask = <Take from="someArray" count="hello" />;
+        const anotherTask = () => <Take from="someArray" count="hello" />;
 
-        expect(anotherTask.start()).rejects.toEqual(errorMsg);
+        expect(anotherTask).toThrowError(errorMsg);
     });
 
     it('should throw an error if no children contains', () => {
         expect.hasAssertions();
 
-        const task = <Take from="someArray" count={3} />;
+        const task = () => <Take from="someArray" count={3} />;
 
-        expect(task.start()).rejects.toEqual('No children contains in Take task');
+        expect(task).toThrowError('No children contains in Take task');
     });
 
     it('should throw an error if no key passed to "from" not contains in children result', () => {

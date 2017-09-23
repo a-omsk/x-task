@@ -19,27 +19,27 @@ describe('Either', () => {
         };
     });
 
-    it('should throw an error if no condition passed or wrong type of condition', () => {
+    it('should throw an error if no predicate passed or wrong type of predicate', () => {
         expect.hasAssertions();
 
-        const task = <Either />;
+        const task = () => <Either />;
 
-        expect(task.start()).rejects.toEqual('Missed condition or invalid condition type in Either task');
+        expect(task).toThrowError('Missed predicate or invalid predicate type in Either task');
     });
 
     it('should throw an error if children count is invalid', () => {
         expect.hasAssertions();
 
-        const task = <Either condition={() => true} />;
+        const task = () => <Either predicate={() => true} />;
 
-        expect(task.start()).rejects.toEqual('Invalid children count in Either task');
+        expect(task).toThrowError('Invalid children count in Either task');
     });
 
-    it('should choose the Left (first) children when falsy condition result', () => {
+    it('should choose the Left (first) children when falsy predicate result', () => {
         expect.hasAssertions();
 
         const task = (
-            <Either condition={() => false}>
+            <Either predicate={() => false}>
                 <Left />
                 <Right />
             </Either>
@@ -48,11 +48,11 @@ describe('Either', () => {
         expect(task.start()).resolves.toEqual({ result: 'left' });
     });
 
-    it('should choose the Right (second) children when truthy condition result', () => {
+    it('should choose the Right (second) children when truthy predicate result', () => {
         expect.hasAssertions();
 
         const task = (
-            <Either condition={() => true}>
+            <Either predicate={() => true}>
                 <Left />
                 <Right />
             </Either>

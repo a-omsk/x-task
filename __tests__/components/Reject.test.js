@@ -5,17 +5,17 @@ describe('Reject', () => {
     it('should throw an error if no "error" field presented', () => {
         expect.hasAssertions();
 
-        const task = <Reject />;
+        const task = () => <Reject />;
 
-        expect(task.start()).rejects.toEqual('no error presented in Reject task');
+        expect(task).toThrowError('no error presented in Reject task');
     });
 
     it('should throw an error if wrong type of "error" field presented', () => {
         expect.hasAssertions();
 
-        const task = <Reject error={[1, 2, 3]} />;
+        const task = () => <Reject error={[1, 2, 3]} />;
 
-        expect(task.start()).rejects.toEqual('Reject\'s task "error" param must be a string or Error / subclass of Error');
+        expect(task).toThrowError('Reject\'s task "error" param must be a string or Error / subclass of Error');
     });
 
     it('should throw an error if task have any children', () => {
@@ -23,13 +23,13 @@ describe('Reject', () => {
 
         class SomeTask extends Task {}
 
-        const task = (
+        const task = () => (
             <Reject error="hello">
                 <SomeTask />
             </Reject>
         );
 
-        expect(task.start()).rejects.toEqual('Reject task should not have any children');
+        expect(task).toThrowError('Reject task should not have any children');
     });
 
     it('should rejects with given error string', () => {

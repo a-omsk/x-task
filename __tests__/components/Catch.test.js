@@ -18,17 +18,17 @@ describe('Catch', () => {
     it('should throw an error if no handler presented', () => {
         expect.hasAssertions();
 
-        const task = <Catch />;
+        const task = () => <Catch />;
 
-        expect(task.start()).rejects.toEqual('no "handler" function contains in Catch task');
+        expect(task).toThrowError('no "handler" function contains in Catch task');
     });
 
     it('should throw an error if wrong type of handler presented', () => {
         expect.hasAssertions();
 
-        const task = <Catch handler={[]} />;
+        const task = () => <Catch handler={[]} />;
 
-        expect(task.start()).rejects.toEqual('"handler" param presented in Catch task should be a function');
+        expect(task).toThrowError('"handler" param presented in Catch task should be a function');
     });
 
     it('should correctly handle the error', () => {

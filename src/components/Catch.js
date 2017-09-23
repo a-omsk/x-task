@@ -1,6 +1,6 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 type CatchParams = {
     handler: Function
@@ -9,19 +9,23 @@ type CatchParams = {
 class Catch extends Task {
     params:CatchParams;
 
+    constructor(...args:Array<any>) {
+        super(...args);
+
+        if (typeof this.params.handler === 'undefined') {
+            throw new TaskError('no "handler" function contains in Catch task');
+        }
+
+        if (typeof this.params.handler !== 'function') {
+            throw new TaskError('"handler" param presented in Catch task should be a function');
+        }
+    }
+
     static get ownParams():Array<string> {
         return ['handler'];
     }
 
     start():Promise<any> {
-        if (typeof this.params.handler === 'undefined') {
-            return Promise.reject('no "handler" function contains in Catch task');
-        }
-
-        if (typeof this.params.handler !== 'function') {
-            return Promise.reject('"handler" param presented in Catch task should be a function');
-        }
-
         return super
             .start()
             .catch(this.params.handler);

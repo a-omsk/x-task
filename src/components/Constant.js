@@ -1,30 +1,30 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 class Merge extends Task {
+    constructor(...args:Array<any>) {
+        super(...args);
+
+        const { name } = this.params;
+
+        if (!name) {
+            throw new TaskError('Missed name in Constant task');
+        }
+
+        if (typeof name !== 'string' && typeof name !== 'number') {
+            throw new TaskError('Wrong type of name in Constant task. Use string or number');
+        }
+
+        if (this.children.length > 0) {
+            throw new TaskError('Constant task should not contain children');
+        }
+    }
+
     do():Promise<any> {
         const { name, value } = this.params;
 
         return Promise.resolve({ [name]: value });
-    }
-
-    start():Promise<any> {
-        const { name } = this.params;
-
-        if (!name) {
-            return Promise.reject('Missed name in Constant task');
-        }
-
-        if (typeof name !== 'string' && typeof name !== 'number') {
-            return Promise.reject('Wrong type of name in Constant task. Use string or number');
-        }
-
-        if (this.children.length > 0) {
-            return Promise.reject('Constant task should not contain children');
-        }
-
-        return this.do();
     }
 }
 

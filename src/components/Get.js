@@ -1,6 +1,6 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 const identity = x => x;
 
@@ -18,6 +18,32 @@ type GetParams = {
 class Get extends Task {
     params:GetParams;
 
+    constructor(...args:Array<any>) {
+        super(...args);
+
+        const { path, as } = this.params;
+
+        if (typeof path === 'undefined') {
+            throw new TaskError('Missed path property in Get task');
+        }
+
+        if (typeof path !== 'string' && !Array.isArray(path)) {
+            throw new TaskError('Get\'s task "path" param must be a string or Array');
+        }
+
+        if (typeof as !== 'undefined' && typeof as !== 'string') {
+            throw new TaskError('Get\'s task "as" param must be a string');
+        }
+
+        if (typeof as !== 'undefined' && as.length === 0) {
+            throw new TaskError('Get\'s task "as" param must not be empty');
+        }
+
+        if (path.length === 0) {
+            throw new TaskError('Get\'s task "path" param must not be empty');
+        }
+    }
+
     do():Promise<any> {
         const { path, as } = this.params;
 
@@ -28,32 +54,6 @@ class Get extends Task {
         return Promise.resolve({
             [targetPath]: result,
         });
-    }
-
-    start():Promise<any> {
-        const { path, as } = this.params;
-
-        if (typeof path === 'undefined') {
-            return Promise.reject('Missed path property in Get task');
-        }
-
-        if (typeof path !== 'string' && !Array.isArray(path)) {
-            return Promise.reject('Get\'s task "path" param must be a string or Array');
-        }
-
-        if (typeof as !== 'undefined' && typeof as !== 'string') {
-            return Promise.reject('Get\'s task "as" param must be a string');
-        }
-
-        if (typeof as !== 'undefined' && as.length === 0) {
-            return Promise.reject('Get\'s task "as" param must not be empty');
-        }
-
-        if (path.length === 0) {
-            return Promise.reject('Get\'s task "path" param must not be empty');
-        }
-
-        return super.start();
     }
 }
 

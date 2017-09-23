@@ -1,6 +1,6 @@
 // @flow
 
-import Task from '../Task';
+import Task, { TaskError } from '../Task';
 
 type TakeParams = {
     from:string | number,
@@ -9,6 +9,24 @@ type TakeParams = {
 
 class Take extends Task {
     params:TakeParams;
+
+    constructor(...args:Array<any>) {
+        super(...args);
+
+        const { from, count } = this.params;
+
+        if (typeof from !== 'string' && typeof from !== 'number') {
+            throw new TaskError('Invalid type of "from" passed to Take task. Use string or number');
+        }
+
+        if (typeof count !== 'number') {
+            throw new TaskError('Invalid type of "count" passed to Take task');
+        }
+
+        if (this.children.length === 0) {
+            throw new TaskError('No children contains in Take task');
+        }
+    }
 
     do():Promise<any> {
         const { from, count } = this.params;
@@ -28,22 +46,6 @@ class Take extends Task {
         }
 
         return super.onResolve(result);
-    }
-
-    start():Promise<any> {
-        if (typeof this.params.from !== 'string' && typeof this.params.from !== 'number') {
-            return Promise.reject('Invalid type of "from" passed to Take task. Use string or number');
-        }
-
-        if (typeof this.params.count !== 'number') {
-            return Promise.reject('Invalid type of "count" passed to Take task');
-        }
-
-        if (this.children.length === 0) {
-            return Promise.reject('No children contains in Take task');
-        }
-
-        return super.start();
     }
 }
 

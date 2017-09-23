@@ -27,13 +27,13 @@ describe('Merge', () => {
     });
 
     it('should throw an error if no children contains within', () => {
-        const task = <Merge onResolve={() => true} />;
+        const task = () => <Merge onResolve={() => true} />;
 
-        expect(task.start()).rejects.toEqual('No children contains in Merge task');
+        expect(task).toThrowError('No children contains in Merge task');
     });
 
     it('should throw an error if missed onResolve function in params', () => {
-        const task = (
+        const task = () => (
             <Merge>
                 <GetHello />
                 <GetThis />
@@ -41,7 +41,7 @@ describe('Merge', () => {
             </Merge>
         );
 
-        expect(task.start()).rejects.toEqual('Missed onResolve function in Merge task');
+        expect(task).toThrowError('Missed onResolve function in Merge task');
     });
 
     it('should correctly merge the children results', () => {
