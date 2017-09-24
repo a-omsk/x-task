@@ -12,6 +12,7 @@ import Zip from './Zip';
 import Get from './Get';
 import Catch from './Catch';
 import Context from './Context';
+import Or from './Or';
 
 export default {
     Pick,
@@ -26,4 +27,5 @@ export default {
     Get,
     Catch,
     Context,
+    Or,
 };
