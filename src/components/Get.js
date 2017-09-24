@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 const identity = x => x;
 
@@ -18,7 +19,7 @@ type GetParams = {
 class Get extends Task {
     params:GetParams;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { path, as } = this.params;

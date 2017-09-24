@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type MergeFn = (results:Array<any>) => {[key:string]: any}
 
@@ -15,14 +16,14 @@ class Merge extends Task {
         return ['onResolve'];
     }
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         if (this.children.length === 0) {
             throw new TaskError('No children contains in Merge task');
         }
 
-        if (this.params.onResolve instanceof Function === false) {
+        if (typeof this.params.onResolve !== 'function') {
             throw new TaskError('Missed onResolve function in Merge task');
         }
     }

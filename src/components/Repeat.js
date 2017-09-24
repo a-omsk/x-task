@@ -1,11 +1,12 @@
 // @flow
 
 import Task from '../Task';
+import type { TaskArgs } from '../Task';
 
 class Repeat extends Task {
     repeatCounter:number;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         this.repeatCounter = this.params.times || 1;

@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type PredicateFn = (...args:Array<any>) => boolean;
 
@@ -15,7 +16,7 @@ class Either extends Task {
         return ['predicate'];
     }
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { predicate } = this.params;

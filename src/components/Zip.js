@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type ZipParams = {
     of: Array<string | number>,
@@ -11,7 +12,7 @@ type ZipParams = {
 class Zip extends Task {
     params:ZipParams;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { of, as, zipper } = this.params;

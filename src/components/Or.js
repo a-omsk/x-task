@@ -4,6 +4,7 @@ import negate from 'lodash/negate';
 import isEmpty from 'lodash/isEmpty';
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type PredicateFn = (result:Object) => boolean;
 
@@ -19,7 +20,7 @@ class Or extends Task {
         return ['predicate'];
     }
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { predicate } = this.params;

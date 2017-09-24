@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type CatchParams = {
     handler: Function
@@ -9,7 +10,7 @@ type CatchParams = {
 class Catch extends Task {
     params:CatchParams;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         if (typeof this.params.handler === 'undefined') {

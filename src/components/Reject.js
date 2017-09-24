@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type RejectParams = {
     error: string | () => Error
@@ -9,7 +10,7 @@ type RejectParams = {
 class Reject extends Task {
     params:RejectParams;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { error } = this.params;

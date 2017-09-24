@@ -3,6 +3,7 @@
 
 import XTask from '../index';
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 const _contextKey = Symbol('context');
 
@@ -17,7 +18,7 @@ class Context extends Task {
         return ['of'];
     }
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         if (typeof this.params.of === 'undefined') {

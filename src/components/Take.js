@@ -1,6 +1,7 @@
 // @flow
 
 import Task, { TaskError } from '../Task';
+import type { TaskArgs } from '../Task';
 
 type TakeParams = {
     from:string | number,
@@ -10,7 +11,7 @@ type TakeParams = {
 class Take extends Task {
     params:TakeParams;
 
-    constructor(...args:Array<any>) {
+    constructor(...args:TaskArgs) {
         super(...args);
 
         const { from, count } = this.params;

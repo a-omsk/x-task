@@ -4,9 +4,11 @@ import omit from 'lodash/omit';
 
 class TaskError extends Error {}
 
+export type TaskParams = Object;
+
 class Task {
-    params:Object;
-    children: Array<Task | Function>;
+    params:TaskParams;
+    children:Array<Task | Function>;
 
     static get ownParams():Array<string> {
         return [];
@@ -82,6 +84,9 @@ class Task {
 }
 
 export default Task;
+
+export type TaskChildren = Array<Task | Function>
+export type TaskArgs = [TaskParams, TaskChildren];
 
 export {
     TaskError,
