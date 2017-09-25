@@ -13,6 +13,7 @@ import Get from './Get';
 import Catch from './Catch';
 import Context from './Context';
 import Or from './Or';
+import Timeout from './Timeout';
 
 export default {
     Pick,
@@ -28,4 +29,5 @@ export default {
     Catch,
     Context,
     Or,
+    Timeout,
 };

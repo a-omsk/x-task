@@ -1,7 +1,7 @@
 // @flow
 
 import Task from './Task';
-import Components from './components/index';
+import components from './components';
 
 import type { TaskParams, TaskChildren } from './Task';
 
@@ -13,8 +13,8 @@ class XTask {
 
 export {
     Task,
-    Components,
     XTask,
+    components,
 };
 
 export default XTask;
