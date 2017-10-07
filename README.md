@@ -54,9 +54,9 @@ const task = (
       <GetCurrentUser />
       <GetUser id={id} />
     </Either>
-    <First from="users" count={1}>
+    <Take from="users" count={1}>
       <GetRecommendedUsers />
-    </First>
+    </Take>
   </Merge>
 );
 
