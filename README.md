@@ -49,7 +49,7 @@ npm install x-task --save
 import XTask, { Task } from 'x-task';
 
 const task = (
-  <Merge handler={handler}>
+  <Merge onResolve={onResolve}>
     <Either predicate={predicate}>
       <GetCurrentUser />
       <GetUser id={id} />
