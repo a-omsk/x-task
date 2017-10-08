@@ -66,7 +66,6 @@ task.start() // return Promise<Result>
   + [`Take`](#take)
   + [`Get`](#get)
   + [`Pick`](#pick)
-  + [`Zip`](#zip)
   + [`Either`](#either)
   + [`Or`](#or)
   + [`Context`](#context)
@@ -95,9 +94,10 @@ XTask.clone(TaskInstance:Task, params:Object, ...Children:Task):Task
 
 ### `Merge`
 
-`Merge` task resolves all children and pass results to onResolve handler:
+`Merge` task resolves all children and pass results to onResolve handler.
 
 **Props:**
+     
     `onResolve:Function = (obj:Result) => Result` - process the results of all children tasks
 
 ```js
@@ -115,15 +115,20 @@ const task = (
         <GetWorld />  // return { result: 'world' }
     </Merge>
 );
+
+// Promise<{ result: 'hello this world' }>
 ```
 
 ### `Zip`
 
-`Zip` task same the lodash zip() function. take the target arrays and combine in with zipper
+`Zip` task same the lodash zip() function. take the target arrays and combine in with zipper.
 
 **Props:**
+    
     `of:Array<Key>` - array of target keys
+     
     `as:string` - zip result name
+    
     `zipper:Function = (...Array<Result<Key>>) => Result`
 
 ```js
@@ -143,14 +148,18 @@ const task = (
         <Friends /> // return { friends:Array<Array<Id>> }
     </Zip>
 );
+
+// Promise<{ fulfilledUsers:Array<{id, name, friends}> }>
 ```
 
 ### `Constant`
 
-`Constant` task always resolves the same value
+`Constant` task always resolves the same value.
 
 **Props:**
+    
     `name:string` - value name
+    
     `value:any` - given value
 
 ```js
@@ -158,13 +167,16 @@ import XTask, { Task, components } from 'x-task';
 const { Constant } = components;
 
 const task = <Constant name="userId" value={42} />;
+
+// Promise<{ userId: 42 }>
 ```
 
 ### `Reject`
 
-`Reject` task always reject the same error
+`Reject` task always reject the same error.
 
 **Props:**
+    
     `error:string | Error` - given error
 
 ```js
@@ -174,6 +186,8 @@ const { Reject } = components;
 class TestError extends Error {}
 
 const task = <Reject error={TestError} />;
+
+// Promise<TestError>
 ```
 
 ### `Catch`
@@ -181,6 +195,7 @@ const task = <Reject error={TestError} />;
 `Catch` task is same the Promise.catch().
 
 **Props:**
+    
     `handler:Function = (e:Error) => Result` - error handler
 
 ```js
@@ -194,6 +209,8 @@ const task = (
         <ProblemTask /> // throws an error
     </Catch>
 );
+
+// Promise<{ result: 42 }>
 ```
 
 ### `Repeat`
@@ -201,27 +218,29 @@ const task = (
 `Repeat` task repeat children task if it rejects.
 
 **Props:**
+        
     `times:number` - repeat count before whole reject
 
 ```js
 import XTask, { Task, components } from 'x-task';
 const { Repeat } = components;
 
-const handler = () => ({ result: 42 });
-
 const task = (
     <Repeat times={2}>
         <ProblemTask /> // throws an error twice
     </Repeat>
 );
+
 ```
 
 ### `Take`
 
-`Take` task take n elements from target array
+`Take` task take n elements from target array.
 
 **Props:**
+    
     `from:Key` - target key (should be an array)
+    
     `count:number` - count of element
 
 ```js
@@ -230,7 +249,114 @@ const { Take } = components;
 
 const task = (
     <Take from="someArray" count={3}>
-        <SomeTask /> // return { someArray: [...] }
+        <SomeTask /> // return { someArray: [1, 2, 3, 4] }
     </Take>
 );
+
+// Promise<{ someArray: [1, 2, 3] }>
+```
+
+### `Get`
+
+`Get` task looks like the lodash get(). Get target value by given path from children task results.
+
+**Props:**
+    
+    `path:string` - path to the target property, e.g. 'some.result'
+    
+    `as:?string` - key name where the result will be saved
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Get } = components;
+
+const task = (
+    <Get path="some.result" as="x">
+        <SomeTask /> // { some: { result: 42 } }
+    </Get>
+);
+
+// Promise<{ x: 42 }>
+```
+
+### `Pick`
+
+`Pick` task looks like the lodash pick(). Get only needed keys from children task results.
+
+**Props:**
+     
+    `...keys:string | boolean` - keys to pick, if value of key is boolean, the same name will be used after picking. If string value of key prop will be a string, result value will be stored with given key value.
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Pick } = components;
+
+const task = (
+    <Pick id firstName>
+        <GetUser />
+    </Pick>
+);
+
+// Promise<{ id: xxx, firstName: xxx }>
+
+const anotherTask = (
+    <Pick id="userId" firstName="userName">
+        <GetUser /> // return { id, firstName }
+    </Pick>
+);
+
+// Promise<{ userId, userName }>
+```
+
+### `Either`
+
+`Either` task call the predicate function and resolve the left (first) children if predicate is falsy, overwise it resolves right (second) child.
+
+**Props:**
+    
+    `predicate:Function = (ctx:EitherContext) => boolean` - predicate to choose the right children.
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Either } = components;
+
+const task = (
+    <Either predicate={() => true}>
+        <Left /> // return { result: 'left' };
+        <Right /> // return { result: 'right' };
+    </Either>
+);
+
+// Promise<{ result: 'right' }>
+
+const anotherTask = (
+    <Either predicate={() => false}>
+        <Left /> // return { result: 'left' };
+        <Right /> // return { result: 'right' };
+    </Either>
+);
+
+// Promise<{ result: 'left' }>
+```
+
+### `Or`
+
+`Or` task looks like || operator with predicate (lodash's negate(isEmpty) by default). Or task resolve all children sequentially until predicate return false
+
+**Props:**
+     
+    `predicate:?Function = (ctx:Result) => boolean` - negate(isEmpty) by default. 
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Or } = components;
+
+const task = (
+    <Or predicate={negate(isEmpty)}>
+        <EmptyTask /> // return {}
+        <NormalTask /> // return { result: 42 };
+    </Or>
+);
+
+// Promise<{ result: 42' }>
 ```
