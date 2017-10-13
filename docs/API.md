@@ -37,7 +37,7 @@ Results of all children tasks will be set to parent task as this.params;
 const task  = XTask.createTask(SomeTask, { id: 1 }, XTask.createTask(SomeChildren)); // without babel
 ```
 
-same as
+same as (via jsx)
 
 ```js
 const task = (
