@@ -422,11 +422,9 @@ import XTask, { Task, components } from 'x-task';
 const { Timeout } = components;
 
 const task = (
-   const task = (
-        <Timeout limit={50}>
-            <SlowTask /> // resolves after 100ms
-        </Timeout>
-    );
+    <Timeout limit={50}>
+        <SlowTask /> // resolves after 100ms
+    </Timeout>
 );
 
 // Promise<TimeoutError>
