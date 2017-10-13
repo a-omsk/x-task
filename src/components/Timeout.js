@@ -27,6 +27,8 @@ class Timeout extends Task {
             throw new TaskError('Timeout\'s task "limit" param must be a number');
         }
 
+        // TODO check negative numbers
+
         if (this.children.length === 0) {
             throw new TaskError('Timeout task not contains any children');
         }
@@ -37,6 +39,7 @@ class Timeout extends Task {
 
         return new Promise((_, reject) => {
             setTimeout(() => {
+                // TODO add TimeoutError
                 reject(`Timeout reached for ${child.constructor.name} task`);
             }, this.params.limit);
         });
