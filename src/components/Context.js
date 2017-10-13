@@ -1,5 +1,4 @@
 // @flow
-// @jsx XTask.createTask
 
 import XTask from '../index';
 import Task, { TaskError } from '../Task';
@@ -55,12 +54,9 @@ const withContext = (WrappedComponent:Function) => {
         }
 
         do():Task {
-            return (
-                <WrappedComponent
-                    {...this.params}
-                    getContext={this.getContext.bind(this)}
-                />
-            );
+            return XTask.createTask(WrappedComponent, Object.assign({
+                getContext: this.getContext.bind(this),
+            }, this.params));
         }
     };
 };
