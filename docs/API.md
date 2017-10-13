@@ -109,7 +109,7 @@ const onResolve = (results) => ({
 });
 
 const task = (
-    <Merge onResolve={onResolve:Function}>
+    <Merge onResolve={onResolve}>
         <GetHello />  // return { result: 'hello' }
         <GetThis />  // return { result: 'this' }
         <GetWorld />  // return { result: 'world' }
@@ -358,5 +358,32 @@ const task = (
     </Or>
 );
 
-// Promise<{ result: 42' }>
+// Promise<{ result: 42 }>
+```
+
+### `Context`
+
+`Context` provides a shared data to child tasks, but only withContext(child) can get this data via handler getContext which mixed to params. Context module contains Task constructor and withContext. Use this feature carefully, because this is error-prone concept (for example as in React). Nevertheless, it can be useful in particular cases, e.g. storing request and response objects of Express.js.
+
+**Props:**
+     
+    `of:Object` - shared data. 
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Context, withContext } = components;
+
+const ctx = {
+    hello: 'world',
+};
+
+const WrappedChild = withContext(ChildTask);
+
+const task = (
+    <Context of={ctx}>
+        <WrappedChild /> // returns result of this.params.getContext()
+    </Context>
+);
+
+// Promise<{ hello: 'world' }>
 ```
