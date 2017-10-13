@@ -15,7 +15,12 @@ Works in any modern javascript environment that supports Promise.
 npm install x-task --save
 ```
 
-### Change default jsx pragma in your .babelrc
+### If you want to use jsx syntax
+```
+npm install --save-dev babel-plugin-transform-react-jsx
+```
+
+### Change default jsx pragma in your .babelrc if you don't use another jsx pragmas (like React, deku, h, etc.)
 ```json
 {
   "plugins": [
@@ -28,6 +33,20 @@ npm install x-task --save
   ]
 }
 ```
+
+### If you want use it with another jsx libraries, just add it to top of your target file
+```
+/** @jsx XTask.createTask */
+```
+
+### And modify .babelrc
+```json
+{
+  "plugins": ["transform-react-jsx"]
+}
+```
+
+
 
 # And...
 
