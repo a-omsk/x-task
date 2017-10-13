@@ -11,7 +11,7 @@ import Reject from './Reject';
 import Zip from './Zip';
 import Get from './Get';
 import Catch from './Catch';
-import Context from './Context';
+import Context, { withContext } from './Context';
 import Or from './Or';
 import Timeout from './Timeout';
 
@@ -30,4 +30,5 @@ export default {
     Context,
     Or,
     Timeout,
+    withContext,
 };

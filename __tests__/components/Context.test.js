@@ -69,4 +69,61 @@ describe('Context', () => {
             ctx,
         });
     });
+
+    it('should set correctly resolve results through nested hoc', () => {
+        expect.assertions(1);
+
+        class ProxyTask extends Task {}
+
+        const WrappedChild = withContext(ChildTask);
+
+        const task = (
+            <Context of={ctx}>
+                <ProxyTask>
+                    <WrappedChild />
+                </ProxyTask>
+            </Context>
+        );
+
+        expect(task.start()).resolves.toEqual({
+            ctx,
+        });
+    });
+
+    xit('should set correctly resolve results through hoc with children', () => {
+        // TODO: withContext wrapped tasks not working with children
+
+        class ProxyTask extends Task {
+            do() {
+                const context = this.params.getContext();
+
+                return Promise.resolve(Object.assign({
+                    world: this.params.childResult,
+                }, context));
+            }
+        }
+
+        class NestedChildTask extends Task {
+            do() {
+                return Promise.resolve({
+                    childResult: 'hello',
+                });
+            }
+        }
+
+        const WrappedChild = withContext(ProxyTask);
+
+        const task = (
+            <Context of={ctx}>
+                <WrappedChild>
+                    <NestedChildTask />
+                </WrappedChild>
+            </Context>
+        );
+
+        expect(task.start()).resolves.toEqual({
+            hello: 'world',
+            world: 'hello',
+        });
+    });
 });
