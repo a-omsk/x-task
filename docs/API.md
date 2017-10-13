@@ -363,7 +363,7 @@ const task = (
 
 ### `Context`
 
-`Context` provides a shared data to child tasks, but only withContext(child) can get this data via handler getContext which mixed to params. Context module contains Task constructor and withContext. Use this feature carefully, because this is error-prone concept (for example as in React). Nevertheless, it can be useful in particular cases, e.g. storing request and response objects of Express.js.
+`Context` task provides a shared data to child tasks, but only withContext(child) can get this data via handler getContext which mixed to params. Context module contains Task constructor and withContext. Use this feature carefully, because this is error-prone concept (for example as in React). Nevertheless, it can be useful in particular cases, e.g. storing request and response objects of Express.js.
 
 **Props:**
      
@@ -386,4 +386,48 @@ const task = (
 );
 
 // Promise<{ hello: 'world' }>
+```
+
+### `Pipe`
+
+`Pipe` task sequentially resolves all children from first to last, and set results of previous task to next's params.
+You can effectively combine this task with [Either](#either) task for building a declarative pipeline with conditional branching.
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Pipe } = components;
+
+const task = (
+   <Pipe>
+        <First /> // return { result: '4' }
+        <Second /> // return {anotherResult: '2' }
+        <Third /> // return { answer: params.result + params.anotherResult }
+    </Pipe>
+);
+
+// Promise<{ answer: '42' }>
+```
+
+
+### `Timeout`
+
+`Timeout` task rejects executing children task after {limit} ms and throw TimeoutError instance. You can wrap it with [Repeat](#repeat) or [Catch](#catch) tasks to effectively process a long requests.
+
+**Props:**
+     
+    `limit:number` - ms before rejecting
+
+```js
+import XTask, { Task, components } from 'x-task';
+const { Timeout } = components;
+
+const task = (
+   const task = (
+        <Timeout limit={50}>
+            <SlowTask /> // resolves after 100ms
+        </Timeout>
+    );
+);
+
+// Promise<TimeoutError>
 ```
