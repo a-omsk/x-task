@@ -1,4 +1,4 @@
-# x-task (WIP)
+# x-task
 
 [![Build Status](https://travis-ci.org/a-omsk/x-task.svg?branch=master)](https://travis-ci.org/a-omsk/x-task)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
