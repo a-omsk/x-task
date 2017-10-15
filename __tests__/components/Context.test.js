@@ -90,8 +90,8 @@ describe('Context', () => {
         });
     });
 
-    xit('should set correctly resolve results through hoc with children', () => {
-        // TODO: withContext wrapped tasks not working with children
+    it('should set correctly resolve results through hoc with children', () => {
+        expect.assertions(1);
 
         class ProxyTask extends Task {
             do() {

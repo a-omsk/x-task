@@ -7,8 +7,11 @@ type TimeoutParams = {
     limit: number
 };
 
+export class TimeoutError extends Error {}
+
 class Timeout extends Task {
     params:TimeoutParams;
+    static TimeoutError:Function;
 
     static get ownParams() {
         return ['limit'];
@@ -27,7 +30,9 @@ class Timeout extends Task {
             throw new TaskError('Timeout\'s task "limit" param must be a number');
         }
 
-        // TODO check negative numbers
+        if (limit < 0) {
+            throw new TaskError('Timeout\'s task "limit" param must be a positive number');
+        }
 
         if (this.children.length === 0) {
             throw new TaskError('Timeout task not contains any children');
@@ -39,8 +44,7 @@ class Timeout extends Task {
 
         return new Promise((_, reject) => {
             setTimeout(() => {
-                // TODO add TimeoutError
-                reject(`Timeout reached for ${child.constructor.name} task`);
+                reject(new TimeoutError(`Timeout reached for ${child.constructor.name} task`));
             }, this.params.limit);
         });
     }
@@ -52,5 +56,7 @@ class Timeout extends Task {
         ]);
     }
 }
+
+Timeout.TimeoutError = TimeoutError;
 
 export default Timeout;

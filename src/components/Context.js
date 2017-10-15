@@ -13,8 +13,8 @@ type ContextParams = {
 class Context extends Task {
     params:ContextParams;
 
-    static get ownParams():Array<string> {
-        return ['of'];
+    static get ownParams():Array<any> {
+        return ['of', _contextKey];
     }
 
     constructor(...args:TaskArgs) {
@@ -53,10 +53,14 @@ const withContext = (WrappedComponent:Function) => {
             return this.params[_contextKey];
         }
 
-        do():Task {
-            return XTask.createTask(WrappedComponent, Object.assign({
+        start():Promise<any> {
+            const task = XTask.createTask(WrappedComponent, Object.assign({
                 getContext: this.getContext.bind(this),
-            }, this.params));
+            }, this.params), ...this.children);
+
+            return task
+                .start()
+                .then(r => this.onResolve(r));
         }
     };
 };

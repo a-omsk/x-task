@@ -3,7 +3,7 @@
 import Task, { TaskError } from '../Task';
 import type { TaskArgs } from '../Task';
 
-class Merge extends Task {
+class Constant extends Task {
     constructor(...args:TaskArgs) {
         super(...args);
 
@@ -29,4 +29,4 @@ class Merge extends Task {
     }
 }
 
-export default Merge;
+export default Constant;

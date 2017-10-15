@@ -1,5 +1,5 @@
 import XTask, { Task } from '../../src';
-import Timeout from '../../src/components/Timeout';
+import Timeout, { TimeoutError } from '../../src/components/Timeout';
 
 describe('Reject', () => {
     let FastTask;
@@ -37,6 +37,14 @@ describe('Reject', () => {
         expect(task).toThrowError('Timeout\'s task "limit" param must be a number');
     });
 
+    it('should throw an error if "limit" is negative', () => {
+        expect.hasAssertions();
+
+        const task = () => <Timeout limit={-500} />;
+
+        expect(task).toThrowError('Timeout\'s task "limit" param must be a positive number');
+    });
+
     it('should throw an error if task have no any children', () => {
         expect.hasAssertions();
 
@@ -68,7 +76,7 @@ describe('Reject', () => {
     });
 
     it('should rejects with timeout error if task not resolved within limit bound', () => {
-        expect.hasAssertions();
+        expect.assertions(2);
 
         jest.useFakeTimers();
 
@@ -79,7 +87,10 @@ describe('Reject', () => {
         );
 
 
-        expect(task.start()).rejects.toEqual('Timeout reached for SomeTaskClass task');
+        task.start().catch(e => {
+            expect(e.message).toEqual('Timeout reached for SomeTaskClass task');
+            expect(e).toBeInstanceOf(TimeoutError);
+        });
         jest.runAllTimers();
     });
 });

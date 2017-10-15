@@ -9,6 +9,7 @@ export type TaskParams = Object;
 class Task {
     params:TaskParams;
     children:Array<Task | Function>;
+    static TaskError:Function;
 
     static get ownParams():Array<string> {
         return [];
@@ -82,6 +83,8 @@ class Task {
             .then(result => this.onResolve(result));
     }
 }
+
+Task.TaskError = TaskError;
 
 export default Task;
 
