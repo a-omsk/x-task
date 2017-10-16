@@ -1,6 +1,6 @@
 {
   "name": "x-task",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Rethink async tasks with JSX and React-like way",
   "main": "index.js",
   "scripts": {
