@@ -23,13 +23,17 @@ Same as this.props in React.
 
 ### `task.do()`
 
-Looks the same as .render of React. Put the main task code here and return the result as a plain object*
+Looks the same as .render of React. Put the main task code here and return the result as a plain object.
+    
+If you want to do some work with task's own params or children results, override this method.
 
 ### `task.start()`
 
-Starts the task, resolve children tasks and performe .do() with children results
-
-Results of all children tasks will be set to parent task as this.params;
+Starts the task, resolve children tasks and performe .do() with children results.
+     
+Results of all children tasks will be set to parent task as this.params.
+    
+If you want to compose children processing or change resolve logic, override this method.
 
 # How to launch task?
 
@@ -75,7 +79,6 @@ task.start() // return Promise<Result>
 ## XTask
 
 ### `createTask()`
-
 Create the task instance.
 
 ```js
@@ -83,7 +86,7 @@ XTask.createTask(SomeTask:TaskClass, params:Object, ...Children:Task):Task
 ```
 
 ### `cloneTask()`
-
+(will be implemented soon)
 Сlone already created task instance with new params / children.
 
 ```js
