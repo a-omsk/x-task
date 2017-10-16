@@ -65,7 +65,10 @@ npm install --save-dev babel-plugin-transform-react-jsx
 ## Compose your tasks with built-in tasks.
 
 ```js
-import XTask, { Task } from 'x-task';
+import XTask, { Task, components } from 'x-task';
+import { GetCurrentUser, GetUser, GetRecommendedUsers } from '...';
+
+const { Merge, Either, Take } = components;
 
 const task = (
   <Merge onResolve={onResolve}>
